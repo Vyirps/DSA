@@ -25,6 +25,28 @@ int main()
 
     EPtr L;
     initialize(L);
+    insertPos(L, 1, 0);
+    insertPos(L, 2, 0);
+    insertPos(L, 3, 0);
+    display(L);
+    deletePos(L, 1);
+    display(L);
+    int num = retrieve(L, 1);
+    if(num != -1){
+        printf("Number at %d", num);
+    }else{
+        printf("None at that position");
+    }
+    
+
+    int num = retrieve(L, 5);
+    if(num != -1){
+        printf("Number at %d", num);
+    }else{
+        printf("None at that position");
+    }
+    
+    
 }
 
 void initialize(EPtr L)
@@ -64,6 +86,8 @@ void deletePos(EPtr L, int position)
 
         }
         printf("\nData was deleted from position %d, current num is now %d", position, L->elemPtr[position]);
+    }else{
+        printf("\nPosition Invalid\n");
     }
 
 
