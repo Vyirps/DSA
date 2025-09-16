@@ -34,8 +34,23 @@ int main(){
     display(L);
     L = insertSorted(L, 0);
     display(L);
+    int num = 3;
+    int found = locate(L, num);
+    if(found != -1){
+        printf("Number found at %d\n", found);
+    }else{
+        printf("NOT FOUND");
+    }
 
+     num = 9;
+    found = locate(L, num);
+    if(found != -1){
+        printf("Number found at %d\n", found);
+    }else{
+        printf("NOT FOUND\n");
+    }
 
+    display(L);
 
 
 
@@ -92,15 +107,19 @@ List deletePos(List L, int position){
 int locate(List L, int data){
     int i = 0;
     while(i <= L.count){
+        printf("\nI count = %d\n", i);
+        printf("Count is %d\n", L.count);
+        printf("\n Iterating\n..");
         if(L.elemPtr[i] == data){
             printf("Data found at position %d, returning value..\n", i);
             return i;
-        
-        i++;
     }
-    printf("Data not found..\n");
-    return -1;
+            i++;
+    
+
 }
+    printf("\nData not found..\n");
+    return -1;
 }
 
 List insertSorted(List L, int data){
