@@ -23,9 +23,15 @@ void makeNULL(List * L);
 
 int main(){
 
+    EPtr L;
+
 }
 
 
-void initialize(List * L)
+void initialize(List * L){
+    L->elemPtr = malloc(LENGTH * sizeof(int));
+    L->count = 0;
+    L->max = LENGTH;
+}
 
 
