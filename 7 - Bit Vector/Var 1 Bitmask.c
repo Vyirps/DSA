@@ -77,6 +77,7 @@ void delete(unsigned char * set, int element){
         unsigned char bitmask = 1 << element; 
         bitmask = ~bitmask;
         *set &= bitmask;
+        
     }else{
         printf("\nCannot delete, element is invalid.\n");
     }
@@ -97,6 +98,7 @@ unsigned char intersection(unsigned char A, unsigned char B){
 }
 unsigned char difference(unsigned char A, unsigned char B){
     return (A & (~B));
+
     
 }
 void display(unsigned char set){
