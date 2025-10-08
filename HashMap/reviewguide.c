@@ -106,13 +106,45 @@ Cursor Balls adt
 typedef struct{
     int elem; //contains data
     int next; //contains address of next
-}Cell, Heapspace;
+}Cell, Heapspace[MAX];
 
 typedef struct{
     Heapspace H; //contains all cells free or not
     int avail; //point to empty 
 }VHeap
 
-typedef int List;
+1. Initialize VHeap, each next must point to the next index, -1 for last.
+2. Avail to 0 (pointing to index zero), L is -1 (Signify list is empty or full)
+3. functions we have are insertFirst(or last), delete, allocSpace and deallocSpace
+4. INSERTION
+- call allocSpace, CHECK first if avail is NOT -1, then store CURRENT and update 
+it to the NEXT avail, and return CURRENT
+- if insertfirst, assign newNode next with *L(head VALUE) and *L to newNode 
+(keep in mind newnode is the index of CURRENT avail)
+
+- if insert last , allocspace then set newNode next as -1 to signify its the last, then  
+assign head to a pointered trav and do a while loop where
+while(*trav != -1) { //traverse to the last
+    trav = &V->H[*trav].next;
+    //in simple terms, we are ASSIGNING the trav ADDRESS with the ADDRESS of the NEXT trav, 
+    & is USED to for address ASSIGNING(Referencing)
+- when done iterating, set *trav to the newnode value(CURRENT avail)
+
+5. DELETION
+- initialize *trav(store next memory) and temp(store deletion index)
+- assign L to trav, start traversion with
+while(*trav != -1 && V->H[*trav].elem != elem) // first condition to keep traversing till last, 
+next condition checks the NEXT node elem if it matches
+-run conditional to check if *trav is not -1, if yes then end function if no then 
+assign *trav (VALUE) to  temp 
+-change the link of current trav to the NEXT of the NEXT one(think of link list relinking on pos insert)
+ *trav = V->H[*trav].next
+ call  dealloc, first point your Index's NEXT to AVAIL(think of it as inserting first from link list),
+ then set the NEW avail as the Index(the node "emptied");
+
+ 
+
+
+
 
 */
