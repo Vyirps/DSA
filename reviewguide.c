@@ -113,6 +113,9 @@ typedef struct{
     int avail; //point to empty 
 }VHeap
 
+
+
+
 1. Initialize VHeap, each next must point to the next index, -1 for last.
 2. Avail to 0 (pointing to index zero), L is -1 (Signify list is empty or full)
 3. functions we have are insertFirst(or last), delete, allocSpace and deallocSpace
