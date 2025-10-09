@@ -181,7 +181,6 @@ while(swap){
       }    
 
 
-    int pInd = temp;
       int left = 2(temp) + 1
       int right = 2(temp) + 2   
       int index = 0;
@@ -225,3 +224,5 @@ down heapify for that   specific parent child, and then to go up repeat process
 
 
 */
+
+
