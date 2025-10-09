@@ -142,8 +142,82 @@ assign *trav (VALUE) to  temp
  call  dealloc, first point your Index's NEXT to AVAIL(think of it as inserting first from link list),
  then set the NEW avail as the Index(the node "emptied");
 
- 
+Binary Heap
+unique constraint - will NOT have duplicate values
+- uses a tree system through an array
+Two types, MAX Heap(Descending) and MIN Heap(Ascending)
 
+from parent
+- left child 2n + 1
+- right child 2n + 2
+
+from child (n - 1) / 2
+
+every add, call HEAPIFY(Sorting algorithm) 
+(2 types: Up Heapify/Down Heapify) heapify is only called when following rule of parent >/< child
+Up Heapify - insertion
+- insert on last node + 1, 
+temp = index of last added
+while(temp != 0){
+   if(tree[temp] > tree[((temp -1)/2))]{
+      swap 
+   }
+   temp = (temp-1)/ 2)
+}
+swap child with the parent, keep repeating process through child 
+formula until false (While loop)
+Down Heapify - Deletion
+- delete root, then swap with the LAST node to the root
+- compare to both childs, then the greater one will be swapped with root
+//downheapify
+temp = root
+bool swap = true;
+while(swap){
+      if(2(temp) + 1 >= ARRAY_SIZE || 2(temp) + 1 > count){
+        break;
+      }    
+
+
+    int pInd = temp;
+      int left = 2(temp) + 1
+      int right = 2(temp) + 2   
+      int index = 0;
+
+      if(tree[left] > tree[right]){
+      index = left;
+      }else{
+      index = right
+       }
+
+     if(tree[index] > tree[pInd]){
+      int valSwap = tree[pInd];
+      tree[pInd] = tree[index];
+      tree[index] = valSwap;
+
+      temp = index;
+      }else{
+      swap = false
+      }
+}
+
+
+
+  
+
+      
+
+    
+      
+
+}
+
+
+
+Heapsort (2nd type of binary heap )
+- uses down heapify
+- look for the last non leaf node(last node added -1 / 2) then do 
+down heapify for that   specific parent child, and then to go up repeat process
+ until root for the whole tree 
 
 
 
