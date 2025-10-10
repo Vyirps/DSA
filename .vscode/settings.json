@@ -58,6 +58,7 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "*.embeddedhtml": "html",
-    "Variation 1.C": "cpp"
+    "Variation 1.C": "cpp",
+    "stdio.h": "c"
   }
 }
