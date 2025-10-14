@@ -121,4 +121,31 @@ void display(unsigned char set){
 
     printf("\n\n");
 
+
 }
+
+
+    while(travFire != NULL){
+        newCopy = travFire; 
+        travFire = travFire->next;
+        newCopy->next = Union->head;
+        Union->head = newCopy;
+    
+    }
+    
+    bool dupli;
+    Node * dupliChecker;
+    while(travWater != NULL){
+        dupli = false;
+        dupliChecker = Union->head;
+        
+        
+        while((strcmp(dupliChecker->spell, travWater->spell)) != 1){
+            
+        }
+        newCopy = travWater; 
+        newCopy->next = Union->head;
+        Union->head = newCopy;
+        
+        travFire = travFire->next;
+    }

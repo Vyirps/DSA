@@ -24,8 +24,8 @@ after inserting a node at the most recent empty index, call upheapify
 4.1 if no swap happens, set swap to false which will stop the whole porcess since nothing cant be swapped anymore
 
 
-HEAPSORT
-- you are given an unsorted array, which will be sorted through downheap but this time your first parent is
-the last non leaf node(lastindex - 1) /2 as temp, repeat process as temp goes up until root. 
-- to be continued kay sir also doesnt know :(, but im guessing the downheap iterates with same amount of last childrens
+5. Unsorted Array 
+1. Make sure its MAX Heaped already 
+2. call heapify with iteration starting from the last
+
 */
