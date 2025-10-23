@@ -74,7 +74,7 @@ void initialize(Set set){
 
 void insert(Set set, int element){
     if(element >= 0 && element < ARRAY_SIZE){
-        set[element] = 1;
+        set[ARRAY_SIZE - 1 - element] = 1;
         printf("\nElement %d is now true\n", element);
     }else{
         printf("\nInvalid element cannot insert\n");
@@ -84,7 +84,7 @@ void insert(Set set, int element){
 
 void delete(Set set, int element){
     if(element >= 0 && element < ARRAY_SIZE){
-        set[element] = 0;
+        set[ARRAY_SIZE - 1 - element] = 0;
         printf("\nElement %d is now false\n", element);
     }else{
         printf("\nInvalid element cannot delete\n");
@@ -92,7 +92,7 @@ void delete(Set set, int element){
 }
 bool find(Set set, int element){
     if(element >= 0 && element < ARRAY_SIZE){
-        if(set[element] == 1){
+        if(set[ARRAY_SIZE - 1 - element] == 1){
             return true;
         }
 
@@ -116,7 +116,7 @@ void difference(Set A, Set B, Set C){
 }
 void display(Set set){
     printf("\nPrinting set\n");
-    for(int i = 0; i < ARRAY_SIZE;i++){
+    for(int i = ARRAY_SIZE - 1; i >= 0;i--){
         if(set[i] == 1){
             printf("%d", i);
         }

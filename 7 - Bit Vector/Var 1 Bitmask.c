@@ -84,6 +84,11 @@ void delete(unsigned char * set, int element){
 
 }
 
+
+
+
+
+
 bool find(unsigned char * set, int element){
         unsigned char bitmask = 1 << element;
         return (*set & bitmask) != 0; 

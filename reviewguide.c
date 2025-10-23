@@ -9,8 +9,10 @@ index 2 -> NULL
 index 3 -> node 1
 index 4 -> NULL
 
-1. initialize dict with array size of max
-2. set all pointers within the array to null
+
+
+1. initialize dict with array size of max 
+2. set all pointers within the array to null (array of pointers)
 3. when inserting, calculate the key
  first (ASCII value for string, number 
  addition for nums in an array);
@@ -145,84 +147,35 @@ assign *trav (VALUE) to  temp
  call  dealloc, first point your Index's NEXT to AVAIL(think of it as inserting first from link list),
  then set the NEW avail as the Index(the node "emptied");
 
-Binary Heap
-unique constraint - will NOT have duplicate values
-- uses a tree system through an array
-Two types, MAX Heap(Descending) and MIN Heap(Ascending)
-
-from parent
-- left child 2n + 1
-- right child 2n + 2
-
-from child (n - 1) / 2
-
-every add, call HEAPIFY(Sorting algorithm) 
-(2 types: Up Heapify/Down Heapify) heapify is only called when following rule of parent >/< child
-Up Heapify - insertion
-- insert on last node + 1, 
-temp = index of last added
-while(temp != 0){
-   if(tree[temp] > tree[((temp -1)/2))]{
-      swap 
-   }
-   temp = (temp-1)/ 2)
-}
-swap child with the parent, keep repeating process through child 
-formula until false (While loop)
-Down Heapify - Deletion
-- delete root, then swap with the LAST node to the root
-- compare to both childs, then the greater one will be swapped with root
-//downheapify
-temp = root
-bool swap = true;
-while(swap){
-      if(2(temp) + 1 >= ARRAY_SIZE || 2(temp) + 1 > count){
-        break;
-      }    
 
 
-      int left = 2(temp) + 1
-      int right = 2(temp) + 2   
-      int index = 0;
+HEAP 
+-is an array, visualize as a tree
+-left child 2n+1, right child 2n+2
+-parent calculation: (n -1)/2
+-two main functions, upheapify(after every insertion) and downheapify(deletion)
+1. upheapify
+after inserting a node at the most recent empty index, call upheapify
+- assign temp as inserted index for traversal, then start a while loop for swappnign
+- while loop will keep being true until it is not zero
+- inside compare current child(temp) to its parent where if temp is >/< than (temp-1/2) and if true then swap
+- update the temp to go up 
 
-      if(tree[left] > tree[right]){
-      index = left;
-      }else{
-      index = right
-       }
+2. downheapify
+- after deletion(last inserted is MOVED to root value and decrement count), start deheapify on root
+- start with a temp set as root for traversal, and bool to keep while loop running while its true 
+- inside while loop will be the following in order
+1. check if the next temp will exceed/equals arraysize (2(temp) + 1) OR exceed count 
+2. initialize values for swap and comparisons, left as left index, right as right index, and index for the bigger/smaller child
+3. check first which of the two childs is bigger/smaller which will be the index 
+4. compare if index value is bigger/smaller than temp, then swap if true
+5. update your temp with index, going down the tree
 
-     if(tree[index] > tree[pInd]){
-      int valSwap = tree[pInd];
-      tree[pInd] = tree[index];
-      tree[index] = valSwap;
-
-      temp = index;
-      }else{
-      swap = false
-      }
-}
-
-
-
-  
-
-      
-
-    
-      
-
-}
+4.1 if no swap happens, set swap to false which will stop    the whole porcess since nothing cant be swapped anymore
 
 
-
-Heapsort (2nd type of binary heap )
-- uses down heapify
-- look for the last non leaf node(last node added -1 / 2) then do 
-down heapify for that   specific parent child, and then to go up repeat process
- until root for the whole tree 
-
-
-
-*/
+5. Unsorted Array 
+1. Make sure its MAX Heaped already 
+2. call heapify with iteration starting from the last
 
 

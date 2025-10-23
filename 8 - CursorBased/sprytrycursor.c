@@ -72,9 +72,9 @@ void deallocSpace(VHeap* V, int index){
 }
 void insertFirst(int* L, VHeap* V, int elem){
 
-    if(V->avail != -1){
+    if(V->avail != -1){ //iftheres still space
         printf("\nInserting Element on Avail Index %d\n", V->avail);
-        int cellIndex = allocSpace(V);
+        int cellIndex = allocSpace(V); //
         V->H[cellIndex].elem = elem;
         V->H[cellIndex].next = *L;
         *L = cellIndex;

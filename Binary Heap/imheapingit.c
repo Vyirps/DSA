@@ -21,7 +21,7 @@ after inserting a node at the most recent empty index, call upheapify
 4. compare if index value is bigger/smaller than temp, then swap if true
 5. update your temp with index, going down the tree
 
-4.1 if no swap happens, set swap to false which will stop the whole porcess since nothing cant be swapped anymore
+4.1 if no swap happens, set swap to false which will stop    the whole porcess since nothing cant be swapped anymore
 
 
 5. Unsorted Array 
