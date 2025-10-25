@@ -1,4 +1,30 @@
 /*
+Sets
+in a form of {1,2,3,etc}, can be interpreted as Set(List) and BitVector(Bitwise, Bitfield, Bitbool array)
+- The basic operation of sets are Union(OR), Intersection(AND), Difference(AND-NOT
+
+
+1. Set(List)
+Uses normal operations, represents everything but 0s and 1s(Only for bitvector)
+Can be in a form of linked list, cursor based, etc
+Example 1: (Insert first LL implementation)
+Set A = {grass, water, ice}
+Set B = {fire, ice, grass}
+Set C(Union) = {fire, grass, water, ice}
+Set C(Intersect) = {grass, ice};
+*No difference can be done, only in BitVector since we cannot inverse anything thats not 0 
+
+
+Operations
+When doing the operations, rule of thumb is u create a local variable to assign the index and then integrate it to the existing variable()
+
+BitVector
+- The concept of using 1 and 0 to represent true/false, with using the set operations
+1. Bitwise
+manipulates 0 and 1 on the variable itself
+Example
+unsigned char bitwise = 00100110
+
 hashmap creation
 1. open dictionary - array of linked list 
 visualization
