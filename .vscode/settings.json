@@ -59,6 +59,7 @@
   "files.associations": {
     "*.embeddedhtml": "html",
     "Variation 1.C": "cpp",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "wtf": "c"
   }
 }
