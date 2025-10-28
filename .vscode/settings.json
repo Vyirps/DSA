@@ -61,5 +61,6 @@
     "Variation 1.C": "cpp",
     "stdio.h": "c",
     "wtf": "c"
-  }
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }
