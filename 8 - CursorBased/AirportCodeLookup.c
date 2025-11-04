@@ -32,8 +32,8 @@ void initialize(VHeap * V){
 }
 
 
-int hash(char * code){
-    int hash = ((code[0] - 'A') * 26 * 26  + (code[1] - 'A') * 26 + (code[2] - 'A')) % 10;
+int hash(char * elem){
+    int hash = ((elem[0] - 'A') * 26 * 26  + (elem[1] - 'A') * 26 + (elem[2] - 'A')) % 10;
     return hash;
 }
 
@@ -48,11 +48,11 @@ void deallocSpace(VHeap * V, int index){
     V->avail = index;
 }
 
-bool finder(VHeap * V, char * code){
-    int key = hash(code);
+bool finder(VHeap * V, char * elem){
+    int key = hash(elem);
     int trav = key;
     while(trav != -1){
-        if(strcmp(V->H[trav].elem, code) == 0){
+        if(strcmp(V->H[trav].elem, elem) == 0){
             return true;
         }
         trav = V->H[trav].next;
@@ -60,92 +60,107 @@ bool finder(VHeap * V, char * code){
     return false;
 }
 
-void insert(VHeap * V){
-    if(V->avail != -1){
-        char code[4];
-        printf("\nEnter Airport Code to Insert: ");
-        scanf("%s", code);
+void insertSortedElem(VHeap * VH){
+
+ 
+    if(VH->avail != -1){
+           char elem[4];
+    printf("Enter airport code: "); 
+    scanf("%s", elem);
+ 
+        int key = hash(elem);
         
-        if(finder(V, code)){
-            printf("\nCANNOT INSERT: Code Already Exists!\n");
-            return; 
+        cell * curr = &VH->H[key];
+        cell * prev = NULL;
+
+
+        if(strcmp(curr->elem, "") == 0){
+            strcpy(curr->elem, elem);
+            return;
         }
-
-        int key = hash(code);
-        int curr = key; 
-
-        while(V->H[curr].next != -1){
-            curr = V->H[curr].next;
-        }
-
-        if(strlen(V->H[curr].elem) == 0){
-            strcpy(V->H[key].elem, code);
-            printf("\nInserted Code %s at Index %d\n", code, curr);
-        }else{
-            int index = allocSpace(V);
-            strcpy(V->H[index].elem, code);
-            V->H[index].next = -1;
-
-            V->H[curr].next = index;
-            
-        printf("\nInserted Code %s at Index %d\n", code, index);
-        }
-
-    }else{
-        printf("\nCode Storage is Full!\n");
-    }
-}
-
-
-
-void delete(VHeap * V){
-    char code[4];
-    printf("\nEnter Airport Code to Delete: ");
-    scanf("%s", code);
-
-    if(finder(V, code)){
-        int key = hash(code);
-        int curr = key, prev = -1; 
-
-        while(curr != -1){
-            if(strcmp(V->H[curr].elem, code) == 0){
-                break;
+        
+        while(1){
+            if(strcmp(curr->elem, elem) == 0){
+                printf("SAME");
+                return;
             }
+
+            if(strcmp(curr->elem, elem) > 0 || curr->next == -1){
+                break; 
+            }
+
             prev = curr; 
-            curr = V->H[curr].next;
+            curr = &VH->H[curr->next]; 
         }
 
-        if(prev ==  - 1){
+        int index = allocSpace(VH); 
+        VH->H[index].next = -1;
 
-            if(V->H[curr].next != -1){
-                int index = V->H[curr].next; 
-                strcpy(V->H[curr].elem, V->H[index].elem);
-                V->H[curr].next = V->H[index].next;
-                deallocSpace(V, index);
-                printf("\nOutcome 1\n"); //deleting on start with a connect on secondary
-                return; 
-            }
+        if(strcmp(curr->elem, elem) < 0){
+            prev = curr; 
+        }
 
-            strcpy(V->H[curr].elem, "");
-            printf("\nOutcome 2\n");//deleting start no connection to secondary
+        if(prev == NULL){
+            VH->H[index] = *curr;
+            strcpy(curr->elem, elem);
+            curr->next = index;
         }else{
-            V->H[prev].next = V->H[curr].next;
-            deallocSpace(V, curr);
-            printf("\nOutcome 3\n"); //  deleting within secondary
+            strcpy(VH->H[index].elem, elem);
+            VH->H[index].next = prev->next;
+            prev->next = index; 
         }
-
-
-    }else{
-        printf("Code %s is not in the Dictionary!", code);
     }
 
-    return; 
-
 }
+
+
+void delete(VHeap * VH){
+
+   char elem[4];
+    printf("Enter airport code: "); 
+    scanf("%s", elem);
+
+
+
+    int key = hash(elem);
+    cell * curr = &VH->H[key]; 
+    cell * prev = NULL;
+
+    while(curr->next != -1){
+        if(strcmp(curr->elem, elem) == 0){
+            break;
+        }
+        prev = curr; 
+        curr = &VH->H[curr->next];
+    }
+    
+
+    if(strcmp(curr->elem, elem) != 0){
+        return; 
+    }
+
+    if(prev == NULL){
+        if(curr->next == -1){
+            strcpy(curr->elem, "");
+            return;
+        }
+
+        VH->H[key] = VH->H[curr->next]; 
+        deallocSpace(VH, curr->next); 
+            
+    }else{
+        int index = prev->next; 
+        prev->next = curr->next; 
+        deallocSpace(VH, index);
+    }
+        
+}
+
+
 
 
 void display(VHeap * V){
-    printf("--- AIRPLACE CODES ---\n");
+    printf("--- AIRPLACE elemS ---\n");
     for(int i = 0;i < SECONDARY ;i++){
         int trav = i;
         printf("Index [%d] -> ", i);
@@ -171,11 +186,11 @@ int main(){
     int choice;
 
     while(runProgram){
-    printf("--- AIRPLANE SYSTEM ---\n1. Insert Code \n2. Delete Code \n3. Display\n4. Exit\nEnter Choice: ");
+    printf("--- AIRPLANE SYSTEM ---\n1. Insert elem \n2. Delete elem \n3. Display\n4. Exit\nEnter Choice: ");
     scanf("%d", &choice);
         switch(choice){
             case 1:
-                insert(&V);
+                insertSortedElem(&V);
                 break;
             
             case 2:
@@ -201,109 +216,18 @@ int main(){
 }
 
 
-/*
-void insert(VHeap * V){
-    if(V->avail != -1){
-        char code[4]; 
-        
-        printf("\nEnter Airport Code to Insert: ");
-        scanf("%s", code);
-        
-        int key = hash(code);
-        if(strlen(V->H[key].elem) != 0){
-            int trav = key;
-            while(V->H[trav].next != -1){
-                trav = V->H[trav].next;
-            }
-            int index = allocSpace(V);
+str
 
-            strcpy(V->H[index].elem, code);
-            V->H[index].next = -1;
-            V->H[trav].next = index;
-            printf("\nInserted Code %s at Index %d\n", code, index);
-        }else{
-            strcpy(V->H[key].elem, code);
-            V->H[key].next = -1;
-            printf("\nInserted Code %s at Index %d\n", code, key);
+int hash = 5381;
+int c; 
 
-        }
-    }else{
-        printf("\nFULL\n");
-    }
+abcd\0
+ ^
+
+while(c = (unsigned char)*str++){
+    hash = hash * 33 + c;
 }
 
-void deallocSpace(VHeap * V, int index){
-    V->H[index].next = V->avail;
-    V->avail = index;
-}
-
-bool finder(VHeap * V, char * code, int trav){
-    return ((V->H[trav].elem[0] == code[0]) && (V->H[trav].elem[1] == code[1]) && (V->H[trav].elem[2] == code[2]));
-}
+hash = hash % ARRAY_SIZE;
 
 
-void delete(VHeap * V){
-    char code[4];
-    printf("\nEnter Airport Code to Delete: ");
-    scanf("%s", code);
-    
-    int key = hash(code);
-    if(key >= 0 && key < SECONDARY){
-        int trav = key, checker;
-        
-
-            if(finder(V, code, trav) && V->H[trav].next == -1){
-                strcpy(V->H[trav].elem, "");
-                return;
-            }
-            else if(finder(V, code, trav)){
-                int nextBlock = V->H[trav].next;
-                strcpy(V->H[trav].elem, V->H[nextBlock].elem);
-                V->H[trav].next = V->H[nextBlock].next;
-                deallocSpace(V, nextBlock);
-                return;
-
-            }else{
-                while(trav != -1){
-                  checker = V->H[trav].next;
-                  if(finder(V, code, checker)){
-                    printf("Code %s was found!\n", code);
-                    
-                    V->H[trav].next = V->H[checker].next;
-                    deallocSpace(V, checker);
-                    
-                    return;
-                  }else{
-                    trav = checker;
-                  } 
-                }
-                printf("Code %s was not found\n", code);
-
-            }    
-    }else{
-        printf("Invalid Code");
-    }
-    
-}
-
-
-void display(VHeap * V){
-    printf("--- AIRPLACE CODES ---\n");
-    for(int i = 0;i < SECONDARY ;i++){
-        int trav = i;
-        printf("Index [%d] -> ", i);
-        if(strlen(V->H[trav].elem) == 0){
-            printf("EMPTY\n");
-        }else{
-            while(trav != -1){
-            printf("%s -> ", V->H[trav].elem);
-                trav = V->H[trav].next;
-        }
-
-        
-         printf(" NULL\n");
-   
-        }
-    }
-}
-*/
