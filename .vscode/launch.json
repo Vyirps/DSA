@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/DSA/DSA/8 - CursorBased",
-      "program": "c:/DSA/DSA/8 - CursorBased/build/Debug/outDebug",
+      "cwd": "c:/DSA/DSA/10 - Binary Heap",
+      "program": "c:/DSA/DSA/10 - Binary Heap/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
