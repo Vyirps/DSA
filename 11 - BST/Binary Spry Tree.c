@@ -1,24 +1,20 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
-typedef struct Node{
-    struct Node * lc;
-    struct Node * rc;
+typedef struct node{
+    struct node * lc;
+    struct node * rc;
     int data;
-}Node,  *BST;
+}*BST, node; 
 
 void insert(BST * tree, int val);
 void delete(BST * tree, int val);
-void inorder(BST trav); 
-void preorder(BST trav);
-void postorder(BST trav);
+void preOrder(BST tree);
+void postOrder(BST tree);
+void inOrder(BST tree);
 
 
 int main(){
-
-
-
     BST tree = NULL; 
 
         insert(&tree, 3);
@@ -32,118 +28,126 @@ int main(){
     insert(&tree, 7);
 
     printf("Inorder: ");
-    inorder(tree);
+    inOrder(tree);
     printf("\nPreorder: ");
-    preorder(tree);
+    preOrder(tree);
     printf("\nPostorder: ");
-    postorder(tree);
+    postOrder(tree);
+    printf("\n");
+
 
     delete(&tree, 5);
     printf("\n\nInorder: ");
-    inorder(tree);
+    inOrder(tree);
     printf("\nPreorder: ");
-    preorder(tree);
+    preOrder(tree);
     printf("\nPostorder: ");
-    postorder(tree);
+    postOrder(tree);
 
     return 0;
+
+
+
 }
 
 
 void insert(BST * tree, int val){
     BST * trav = tree; 
+
     while(*trav != NULL){
-        
+
+        printf("Traversing...\n");
         if((*trav)->data == val){
-            printf("%d already exists!\n", val);
+            printf("Duplicate was found, ending function...\n");
             return; 
         }
 
-            trav = (*trav)->data > val ? &(*trav)->lc : &(*trav)->rc;
-
-    }    
-        if(*trav == NULL){
-            *trav = (BST)calloc(1, sizeof(Node));
-            (*trav)->data = val;
-        }
-
-    printf("Value %d is inserted to tree!\n", val);
-}
-
-void delete(BST * tree, int val){
-    BST * trav = tree;
-
-    while(*trav != NULL){
-        printf("Iterating..\n");
-        if((*trav)->data == val){
-            printf("\nVal %d was found!\n", (*trav)->data);
-            break;
-        }
         trav = (*trav)->data > val ? &(*trav)->lc : &(*trav)->rc;
+
     }
 
     if(*trav == NULL){
-        printf("\nTree is empty/Node was not found!\n");
+        *trav = (BST)calloc(1, sizeof(node));
+        (*trav)->data = val; 
+        printf("Value %d was inserted to the tree!..\n", (*trav)->data);
+    }
+
+
+}
+void delete(BST * tree, int val){
+    BST * trav = tree; 
+
+    while(*trav != NULL){
+
+        printf("Traversing...\n");
+        if((*trav)->data == val){
+            printf("Val %d was found!, proof is Node contains %d..\n", val, (*trav)->data);
+            break;
+        }
+
+        trav = (*trav)->data > val ? &(*trav)->lc : &(*trav)->rc;
+
+    }
+
+    if(*trav == NULL){
+        printf("Value %d was not found!...\n", val); 
         return; 
     }
 
     if((*trav)->data == val){
-
+        printf("Value %d was found! Deleting..\n", (*trav)->data);
         if((*trav)->lc == NULL && (*trav)->rc == NULL){
-            printf("Freeing node with no children...\n");
             free(*trav); 
+            *trav = NULL;
+            printf("Node with no children removed!\n");
         }else if((*trav)->lc != NULL && (*trav)->rc == NULL){
-            printf("Freeing node with left child only...\n");
-            BST temp = (*trav)->lc;
+            BST temp = (*trav)->lc; 
             free(*trav);
             *trav = temp; 
+            printf("Node with left child only removed and replaced!\n"); 
         }else if((*trav)->lc == NULL && (*trav)->rc != NULL){
-            printf("Freeing node with right child only...\n");
-            BST temp = (*trav)->rc; 
+            BST temp = (*trav)->rc;
+            printf("trav data is %d\n", (*trav)->data);
+            printf("temp data is %d\n", temp->data);
             free(*trav); 
             *trav = temp; 
+            printf("new trav data is %d\n", (*trav)->data);
+
+            printf("Node with right child only removed and replaced!\n");
         }else{
-            printf("Freeing node with 2 children...");
-            BST smallest = (*trav)->rc;
-            while(smallest->lc != NULL){
-                smallest = smallest->lc;
+            BST left = (*trav)->rc;
+            while(left->lc != NULL){
+                printf("Traversing for replacement...\n");
+                left = left->lc;
             }
-            (*trav)->data = smallest->data; 
-            printf("Fixing tree by deleting copied data %d...n", smallest->data);
-            delete(&(*trav)->rc, smallest->data);
+
+            (*trav)->data = left->data; 
+            delete(&(*trav)->rc, left->data);
         }
 
-        printf("\nDeletion of %d was successful!", val); 
+        printf("Sucessfully deleted %d!\n", val);
 
     }
-
-
 }
-
-void inorder(BST trav){
-
-    if(trav != NULL){
-    inorder(trav->lc);
-    printf("%d ", trav->data);
-    inorder(trav->rc);        
+void preOrder(BST tree){
+    if(tree != NULL){
+        printf("%d ", tree->data); 
+        preOrder(tree->lc);
+        preOrder(tree->rc);
     }
-
 }
-
-void preorder(BST trav){
-    if(trav != NULL){
-    printf("%d ", trav->data);
-    preorder(trav->lc);
-    preorder(trav->rc);        
+void postOrder(BST tree){
+    if(tree != NULL){
+        postOrder(tree->lc);
+        postOrder(tree->rc);
+        printf("%d ", tree->data);
     }
-
 }
-
-void postorder(BST trav){
-    if(trav != NULL){
-    postorder(trav->lc);
-    postorder(trav->rc);
-    printf("%d ", trav->data);        
+void inOrder(BST tree){
+    if(tree != NULL){
+        inOrder(tree->lc);
+        printf("%d ", tree->data);
+        inOrder(tree->rc);
     }
-
 }
+
