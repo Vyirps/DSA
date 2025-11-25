@@ -120,7 +120,6 @@ void delete(BST * tree, int val){
                 printf("Traversing for replacement...\n");
                 left = left->lc;
             }
-
             (*trav)->data = left->data; 
             delete(&(*trav)->rc, left->data);
         }
