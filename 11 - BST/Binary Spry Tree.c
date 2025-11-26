@@ -9,9 +9,9 @@ typedef struct node{
 
 void insert(BST * tree, int val);
 void delete(BST * tree, int val);
-void preOrder(BST tree);
-void postOrder(BST tree);
-void inOrder(BST tree);
+void preorder(BST tree);
+void postorder(BST tree);
+void inorder(BST tree);
 
 
 int main(){
@@ -28,21 +28,21 @@ int main(){
     insert(&tree, 7);
 
     printf("Inorder: ");
-    inOrder(tree);
+    inorder(tree);
     printf("\nPreorder: ");
-    preOrder(tree);
+    preorder(tree);
     printf("\nPostorder: ");
-    postOrder(tree);
+    postorder(tree);
     printf("\n");
 
 
     delete(&tree, 5);
     printf("\n\nInorder: ");
-    inOrder(tree);
+    inorder(tree);
     printf("\nPreorder: ");
-    preOrder(tree);
+    preorder(tree);
     printf("\nPostorder: ");
-    postOrder(tree);
+    postorder(tree);
 
     return 0;
 
@@ -54,99 +54,74 @@ int main(){
 void insert(BST * tree, int val){
     BST * trav = tree; 
 
-    while(*trav != NULL){
-
-        printf("Traversing...\n");
-        if((*trav)->data == val){
-            printf("Duplicate was found, ending function...\n");
-            return; 
-        }
-
+    while(*trav != NULL && (*trav)->data != val){
         trav = (*trav)->data > val ? &(*trav)->lc : &(*trav)->rc;
-
     }
 
     if(*trav == NULL){
         *trav = (BST)calloc(1, sizeof(node));
         (*trav)->data = val; 
-        printf("Value %d was inserted to the tree!..\n", (*trav)->data);
     }
-
-
 }
 void delete(BST * tree, int val){
     BST * trav = tree; 
 
-    while(*trav != NULL){
-
-        printf("Traversing...\n");
-        if((*trav)->data == val){
-            printf("Val %d was found!, proof is Node contains %d..\n", val, (*trav)->data);
-            break;
-        }
-
+    while(*trav != NULL && (*trav)->data != val){
         trav = (*trav)->data > val ? &(*trav)->lc : &(*trav)->rc;
-
     }
 
-    if(*trav == NULL){
-        printf("Value %d was not found!...\n", val); 
-        return; 
-    }
 
     if((*trav)->data == val){
-        printf("Value %d was found! Deleting..\n", (*trav)->data);
         if((*trav)->lc == NULL && (*trav)->rc == NULL){
-            free(*trav); 
-            *trav = NULL;
-            printf("Node with no children removed!\n");
-        }else if((*trav)->lc != NULL && (*trav)->rc == NULL){
-            BST temp = (*trav)->lc; 
             free(*trav);
-            *trav = temp; 
-            printf("Node with left child only removed and replaced!\n"); 
+            *trav = NULL; 
+        }else if((*trav)->lc != NULL && (*trav)->rc == NULL){
+            BST temp = (*trav)->lc;
+            free(*trav); 
+            *trav = temp;
         }else if((*trav)->lc == NULL && (*trav)->rc != NULL){
             BST temp = (*trav)->rc;
-            printf("trav data is %d\n", (*trav)->data);
-            printf("temp data is %d\n", temp->data);
             free(*trav); 
-            *trav = temp; 
-            printf("new trav data is %d\n", (*trav)->data);
-
-            printf("Node with right child only removed and replaced!\n");
+            *trav = temp;
         }else{
-            BST left = (*trav)->rc;
-            while(left->lc != NULL){
-                printf("Traversing for replacement...\n");
-                left = left->lc;
+            BST temp = (*trav)->rc;
+            while(temp->lc != NULL){
+                temp = temp->lc;
             }
-            (*trav)->data = left->data; 
-            delete(&(*trav)->rc, left->data);
+            (*trav)->data = temp->data; 
+            delete(&(*trav)->rc, temp->data);
         }
-
-        printf("Sucessfully deleted %d!\n", val);
-
     }
 }
-void preOrder(BST tree){
+void preorder(BST tree){
     if(tree != NULL){
+        
         printf("%d ", tree->data); 
-        preOrder(tree->lc);
-        preOrder(tree->rc);
+        preorder(tree->lc);
+        preorder(tree->rc); 
+
+
     }
 }
-void postOrder(BST tree){
+void postorder(BST tree){
     if(tree != NULL){
-        postOrder(tree->lc);
-        postOrder(tree->rc);
+
+        postorder(tree->lc);
+        postorder(tree->rc);
         printf("%d ", tree->data);
+
     }
 }
-void inOrder(BST tree){
+void inorder(BST tree){
     if(tree != NULL){
-        inOrder(tree->lc);
-        printf("%d ", tree->data);
-        inOrder(tree->rc);
+
+        inorder(tree->lc);
+        printf("%d ", tree->data); 
+        inorder(tree->rc);
+
     }
+
+
+
 }
 
