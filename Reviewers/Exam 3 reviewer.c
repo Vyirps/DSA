@@ -165,8 +165,32 @@ Basic Commands
 
 
 
+Graphs 
+- array of linked list
 
 
+Graphs typedef
+typdef struct node{
+    int elem;
+    struct node * link;
+}
+
+typedef ptr Graph[MAX]
+
+
+DFS Graphs
+Depth First Traversal
+- array of link list traversal
+    - initialize temp node to hold our current vertice 
+    - print out data, mark that vertice as visited
+    - start a for loop where trav starts at current vertice, stop the loop if trav is null, while incremending through trav = trav->next
+    - add a condition checking if travs elem(technically index) is not visited, 
+        *if yes then call dfs again, with value of trav passed on vertices(passing the next index through recursion)
+
+BFS Graph
+Breadth First Graph
+- starts with any nopde for trav, makes use of array to check if visited
+- visits all nodes adjacent to current node //recursive?
 
 
 
