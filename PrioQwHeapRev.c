@@ -122,9 +122,9 @@ void heapifyDown(PriorityQueue *pq, int index){
     int largest = index; 
     int left = 2 * index + 1; 
     int right = 2 * index + 2; 
+
     
-    
-    if( left < pq->size && pq->heap[left].priority > pq->heap[largest].priority){
+    if( left < pq->size && &&pq->heap[left].priority > pq->heap[largest].priority){
         largest = left; 
     }
     

@@ -5,6 +5,7 @@ Priority Queue
 Binary Tree
 Binary Search Tree
 Graphs
+Itlog ni Djakstra
 
 
 Priority Queue
@@ -56,10 +57,13 @@ Basic commands
 largest = i //current parent index
 left = 2(i) + 1 //current's left child
 right = 2(i) + 2 //current's right child
+leftVal = value of left, ternary to assign where not valid is some negative num
+rightVal = same as leftVal but right
 
 - Setup two if statements, where both:
 checks if its under size, meaning valid
-if childs index value is higher than largest's index value, assign that specific child as largest 
+if childs index value is higher than largest's index value, proceed to next condition
+where if that child is greater than the other (leftVal > rightVal) then assign that as largest
 
 - check if largest is not equal to i(if its not eq, it means a child is greater)
 if condition was fulfilled:
@@ -164,6 +168,217 @@ Basic Commands
 
 
 
+Graphs 
+- a finite set of points connected, called vertices 
+
+Edge
+- joins each node together
+A-------------B
+^       ^
+node    edge
+
+
+Different Types of graphs
+1. Directed Graph (A------------>B)
+    - Graphs where edge has directions
+
+2. Undirected Graph (A-------B)
+    - Does not have a direction
+
+3.  Complete Graph
+    - ever pair of node is joined by an edge (A to B,C : B to A,C : C to A,B)
+    * to calculate for amount of edges in a complete graph, the formula is:
+        (n-1) * (n-2) where is n is the total amount of nodes
+
+4. Connected Graph 
+    - If there exists a path for every arbitrary source or event
+    //in summary if theres a path that goes through ALL nodes from start to end
+
+Arc (Tail-------->Head)
+- Directed edge / edges with arrows pointing
+- joins unordered pair of distinct nodes, pointing to another node
+
+Adjacency 
+- Node that is adjacent to each other 
+Example: T2 --------> T1
+    - T2 is ADJACENT to T1
+    - Head is ADJACENT to Tail
+
+Path
+- Sequences of vertices
+
+Length of path
+- number of arcs in a path
+Example: A ---------> B ---------> C
+    - There are two arcs from A to C
+
+Simple path 
+- If all vertices are distinct
+//in a sense each node can only have one outgoing and receiving
+Example: A ----> B ----> C ----> D ----> A //this is valid, fulfills condition
+         A ----> B ----> C ----> A ----> D //this is NOT valid, breaks condition
+
+Loops are defined through cycles, where:
+Simple Cycle 
+- Simple path that begins and ends at the same vertex (Example 1 of simple path)
+
+Cyclic Graph 
+- Contains a cycle(loop)
+
+Acyclic Cycle
+- Contains NO cycle(no loop)
+
+Incident 
+- A node is incident to an arc IF n is one of the two nodes in an ordered pair
+//simple terms, a node is an incident if its one of the two nodes in an arc 
+Example: P1 ------> P2
+               ^
+            Arc X 
+    - P1 is an incident to Arc X
+    - P2 is an incident to Arc X
+
+Degree 
+- Number of arcs incident to a node
+Example P3 ----- > P2 <----- P1 
+    - P2 has 2 degrees 
+
+Types of degrees
+1. Indegree 
+- the number of arcs that have the node as a head 
+    - In the example above, P2 has 2 indegrees 
+
+2. Outdegree 
+- the number of arcs that have the node as a tail 
+    - In the example above, P1 has 1 outdegree
+
+Relations in a graph 
+1. Weighted Graph 
+- The weight of each arc is the remainder of Heads % Tail
+//in short, calculate the mod of head and tail for the value of that arc
+
+         3                      4
+         |                    / |
+         |                   /  |
+         |                  /   |
+     /   |                |/_   |
+15__ ----------------------7    |
+|\   \   |                      |
+  \      |                      |
+   \     |                     \|/
+    \    |                      2
+     \   |
+      \ \|/
+        10
+
+List of Values: 
+Arc 10 -> 15: 5
+Arc 3 -> 10: 1
+Arc 7 -> 15: 1
+Arc 4 -> 7: 3
+Arc 4 -> 2: 0
+
+
+2. Labeled Graph 
+- di graph in which arcs and/or vertices have an associated label of any value
+//This means each arc can have random values, unlike weighted graph that calculates for value of an arc
+
+Representations in C (IM SO COOKED)
+1. Adjacency Matrix(2D array)
+- Uses a 2d array system that marks arrays index as true if a connection exist between x and y (tail and head)
+Visualization
+[0] A ----------------->__ B [1]
+    |                    /|                     
+    |                   / |
+    |     -----------  /  |
+    |    /                |
+    |   /                 |
+    |  /                  |
+   \|//                  \|/
+[3] D ----------------->  C [2]
+
+2D array visualization
+               Head  
+        |-0---1---2---3-||
+      0 |-0-|-1-|-0-|-1-||
+Tails 1 |-0-|-0-|-1-|-0-||
+      2 |-0-|-0-|-0-|-0-||
+      3 |-0-|-1-|-2-|-0-||
+
+Existing Arcs: 
+0 -> 1
+0 -> 3
+1 -> 2
+3 -> 2
+3 -> 1 
+
+
+ Weighted Adjacency
+- same implementation, but uses value instead of bool operators
+- traversal works by checking the shortest possible path
+
+Visualization
+[0] A --------5-------->__ B [1]
+    |                    /|                     
+    |                   / |
+    |     ---5-------  /  |
+    8    /                7
+    |   /                 |
+    |  /                  |
+   \|//                  \|/
+[3] D --------9 ------->  C [2]
+
+2D array visualization
+               Head  
+        |-0---1---2---3-||
+      0 |INF|-5-|INF|-8-||
+Tails 1 |INF|INF|-7-|INF||
+      2 |INF|INF|INF|INF||
+      3 |INF|-5-|-9-|INF||
+
+Existing Arcs: 
+0 -> 1, Value 5
+0 -> 3, Value 8
+1 -> 2, Value 7
+3 -> 2, Value 5
+3 -> 1, Value 5 //same value  going back
+
+Code algorithm 
+- Infinite for inactive spots, to avoid traversing to those coords
+    can be either done by:
+    1. #define INF 999
+    2. Math.h where double inf = INFINITY
+
+
+2. An array of link list
+- Think of this as open hash, but recursive printing on DFS/BFS
+//The nodes are basically connections of that index
+index 0 -> 1 -> 3
+index 1 -> 2
+index 2 -> NULL
+index 3 -> 2 -> 1
+
+Code Algorithm 
+Insertion(Graph G, int v, int indexVal)
+//G for graph, v for parent index to insert on, indexVal as value to insert on node
+- Initialize a new node as calloc, with 1 as size then insert indexVal as data
+- Check if the v index is empty, if it is then insert as head
+- else start a trav in index v (G[v]), trav until next is null then insert at last
+
+Deletion
+//idk yet im still thinking but no next(no connections) is prolly free that node, but if theres children inherit on grandparent
+
+Depth First Search - DFS(Graph G, int v, int * dict)
+//prints through a recursive function that checks if a node is in dict, if not then add there
+- print the data of the passed index 
+- through the dict(array that checks through boolean), mark that v index(dict[v]) as true(1)
+- start a for loop where trav is initialized as passed index (G[v]), trav is NOT null, and increments via traverseing to next (trav = trav->next)
+- in the loop, check if the data of trav is FALSE(Unvisited) in the dict(dict[v] == 0)
+- IF not visited call dfs recursively, passing trav's data(next index) as your v, ELSE loop continues
+
+
+
+3. Dictionary Based
+//idk yet but its just cursor based closed hash, shouldnt be hard
 
 
 
@@ -176,11 +391,6 @@ Basic Commands
 
 
 
-
-
-
-
-*/
 
 
 
@@ -234,4 +444,39 @@ if(largest != i){
     heapify(pq, largest);
 }
 
+typedef struct node{
+    struct node * next; 
+    int data; 
+}node, *ptr; 
 
+typedef ptr Graph[MAX]; 
+
+
+void dfs(Graph G, int v, int * dict){
+    printf("%d" G[v]->data); 
+    dict[v] = VISITED; 
+
+    for(node * trav = G[v]; trav != NULL ;trav = trav->next){
+        if(trav->data == UNVISITED){
+            dfs(G, trav->data, dict);
+        }
+    }
+}
+
+
+void insert(Graph G, int v, int val){
+    node * newNode = (node*)calloc(1, sizeof(node)); 
+    newNode->data = val; 
+
+    if(G[v] == NULL){
+
+    }
+
+
+    ptr trav = G[v]; 
+    while(trav->next != NULL){
+        trav = trav->next; 
+    }
+
+    trav->next = newNode; 
+}

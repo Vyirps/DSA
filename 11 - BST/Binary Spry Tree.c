@@ -50,78 +50,67 @@ int main(){
 
 }
 
-
 void insert(BST * tree, int val){
     BST * trav = tree; 
-
     while(*trav != NULL && (*trav)->data != val){
         trav = (*trav)->data > val ? &(*trav)->lc : &(*trav)->rc;
     }
 
     if(*trav == NULL){
-        *trav = (BST)calloc(1, sizeof(node));
+        *trav = (BST)calloc(1, sizeof(node)); 
         (*trav)->data = val; 
     }
 }
 void delete(BST * tree, int val){
     BST * trav = tree; 
-
     while(*trav != NULL && (*trav)->data != val){
-        trav = (*trav)->data > val ? &(*trav)->lc : &(*trav)->rc;
+        trav = (*trav)->data > val ? &(*trav)->lc : &(*trav)->rc; 
     }
 
-
     if((*trav)->data == val){
+        //4 outcomes
         if((*trav)->lc == NULL && (*trav)->rc == NULL){
-            free(*trav);
-            *trav = NULL; 
+            free(*trav); 
+            *trav = NULL;
         }else if((*trav)->lc != NULL && (*trav)->rc == NULL){
-            BST temp = (*trav)->lc;
+            BST temp = (*trav)->lc; 
             free(*trav); 
-            *trav = temp;
+            *trav = temp; 
         }else if((*trav)->lc == NULL && (*trav)->rc != NULL){
-            BST temp = (*trav)->rc;
+            BST temp = (*trav)->rc; 
             free(*trav); 
-            *trav = temp;
+            *trav = temp; 
         }else{
             BST temp = (*trav)->rc;
             while(temp->lc != NULL){
-                temp = temp->lc;
+                temp = temp->lc; 
             }
             (*trav)->data = temp->data; 
-            delete(&(*trav)->rc, temp->data);
+            delete(&(*trav)->rc, temp->data); 
         }
     }
 }
 void preorder(BST tree){
     if(tree != NULL){
-        
         printf("%d ", tree->data); 
-        preorder(tree->lc);
+        preorder(tree->lc); 
         preorder(tree->rc); 
-
-
     }
 }
 void postorder(BST tree){
     if(tree != NULL){
-
-        postorder(tree->lc);
-        postorder(tree->rc);
-        printf("%d ", tree->data);
+        postorder(tree->lc); 
+        postorder(tree->rc); 
+        printf("%d ", tree->data);         
 
     }
 }
 void inorder(BST tree){
     if(tree != NULL){
-
         inorder(tree->lc);
         printf("%d ", tree->data); 
         inorder(tree->rc);
-
     }
-
-
-
 }
+
 
