@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/DSA/DSA/10 - Binary Heap",
-      "program": "c:/DSA/DSA/10 - Binary Heap/build/Debug/outDebug",
+      "cwd": "c:/DSA/DSA/12 - DFS and BFS",
+      "program": "c:/DSA/DSA/12 - DFS and BFS/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

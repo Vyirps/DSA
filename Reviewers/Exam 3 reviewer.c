@@ -57,13 +57,10 @@ Basic commands
 largest = i //current parent index
 left = 2(i) + 1 //current's left child
 right = 2(i) + 2 //current's right child
-leftVal = value of left, ternary to assign where not valid is some negative num
-rightVal = same as leftVal but right
 
 - Setup two if statements, where both:
 checks if its under size, meaning valid
 if childs index value is higher than largest's index value, proceed to next condition
-where if that child is greater than the other (leftVal > rightVal) then assign that as largest
 
 - check if largest is not equal to i(if its not eq, it means a child is greater)
 if condition was fulfilled:
@@ -405,7 +402,7 @@ Depth First Traversal
 BFS Graph
 Breadth First Graph
 - starts with any nopde for trav, makes use of array to check if visited
-- visits all nodes adjacent to current node //recursive?
+- visits all nodes adjacent to current node //recursive? NOT RECURSIVE
 
 
 
