@@ -5,7 +5,7 @@ Priority Queue
 Binary Tree
 Binary Search Tree
 Graphs
-Itlog ni Djakstra
+Itlog ni Djakstra 
 
 
 Priority Queue

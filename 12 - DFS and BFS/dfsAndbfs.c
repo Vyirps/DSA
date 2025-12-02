@@ -211,7 +211,7 @@ int dequeue(Queue * Q){
     int val = Q->qArr[Q->front];
     if(Q->front == Q->rear){
         Q->front = -1;
-        Q->rear = 0;
+        Q->rear = 0; //
     } else Q->front = (Q->front + 1) % MAX; 
     return val; 
 
