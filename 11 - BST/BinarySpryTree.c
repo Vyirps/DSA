@@ -12,6 +12,9 @@ void delete(BST * tree, int val);
 void preorder(BST tree);
 void postorder(BST tree);
 void inorder(BST tree);
+int maxHeight(BST tree); 
+int minHeight(BST tree); 
+int depth(BST tree, int target);
 
 
 int main(){
@@ -35,15 +38,9 @@ int main(){
     postorder(tree);
     printf("\n");
 
-
-    delete(&tree, 5);
-    printf("\n\nInorder: ");
-    inorder(tree);
-    printf("\nPreorder: ");
-    preorder(tree);
-    printf("\nPostorder: ");
-    postorder(tree);
-
+    printf("The maximum height is %d\n", maxHeight(tree));
+    printf("The minimum height is %d\n", minHeight(tree));
+    printf("The depth of node %d is %d", 9, depth(tree, 9));
     return 0;
 
 
@@ -114,3 +111,28 @@ void inorder(BST tree){
 }
 
 
+int maxHeight(BST tree){
+    if(tree == NULL ) return 0; 
+    if(tree->lc == NULL && tree->rc == NULL) return 0; 
+
+    int left = maxHeight(tree->lc);
+    int right = maxHeight(tree->rc); 
+
+    return left > right ? left + 1 : right + 1; 
+}
+
+int minHeight(BST tree){
+    if(tree == NULL ) return 0; 
+    if(tree->lc == NULL && tree->rc == NULL) return 0; 
+
+    int left = minHeight(tree->lc);
+    int right = minHeight(tree->rc); 
+
+    return left < right ? left + 1 : right + 1; 
+}
+
+int depth(BST trav, int target){
+    if(trav->data == target ) return 0; 
+    trav = trav->data > target ? trav->lc : trav->rc; 
+    return depth(trav, target) + 1; 
+}

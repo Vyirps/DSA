@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/DSA/DSA/practice codes",
-      "program": "c:/DSA/DSA/practice codes/build/Debug/outDebug",
+      "cwd": "c:/DSA/DSA/12 - DFS and BFS",
+      "program": "c:/DSA/DSA/12 - DFS and BFS/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

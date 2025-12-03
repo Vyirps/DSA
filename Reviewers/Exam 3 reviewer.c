@@ -354,25 +354,6 @@ index 1 -> 2
 index 2 -> NULL
 index 3 -> 2 -> 1
 
-Code Algorithm 
-Insertion(Graph G, int v, int indexVal)
-//G for graph, v for parent index to insert on, indexVal as value to insert on node
-- Initialize a new node as calloc, with 1 as size then insert indexVal as data
-- Check if the v index is empty, if it is then insert as head
-- else start a trav in index v (G[v]), trav until next is null then insert at last
-
-Deletion
-//idk yet im still thinking but no next(no connections) is prolly free that node, but if theres children inherit on grandparent
-
-Depth First Search - DFS(Graph G, int v, int * dict)
-//prints through a recursive function that checks if a node is in dict, if not then add there
-- print the data of the passed index 
-- through the dict(array that checks through boolean), mark that v index(dict[v]) as true(1)
-- start a for loop where trav is initialized as passed index (G[v]), trav is NOT null, and increments via traverseing to next (trav = trav->next)
-- in the loop, check if the data of trav is FALSE(Unvisited) in the dict(dict[v] == 0)
-- IF not visited call dfs recursively, passing trav's data(next index) as your v, ELSE loop continues
-
-
 
 3. Dictionary Based
 //idk yet but its just cursor based closed hash, shouldnt be hard
@@ -389,6 +370,34 @@ typdef struct node{
 
 typedef ptr Graph[MAX]
 
+Code Algorithm 
+InsertList(Graph G, int parent, int indexVal)
+//double ptr implementation
+- initialize a double ptr at the address of G[parent]
+- traverse until trav is null, and inside the traversal if there is a duplicate return to end the func 
+- after while loop ends, initialize a calloc on *trav and insert your data
+
+deleteList(Graph G, int target) 
+//double ptr implementation 
+- initialize a for loop, where we will initialize a double ptr at G[i] to search for the target node to delete
+- add a while loop that traverses until trav is null, and inside add an if condition that breaks if target was found 
+- after while loop ends, check first if trav is null//this is to check if your head was empty 
+    - set your *trav to (*trav->next) //now it points to after target because we found the val in the list
+- now initialize a single ptr curr, and a while loop that keeps running until G[target] is null //we are deleting every connection in that index
+ - in the while loop the steps are:
+    - assign head to curr
+    - move head to next
+    - free curr
+
+
+Depth First Search - DFS(Graph G, int v, int * dict)
+//prints through a recursive function that checks if a node is in dict, if not then add there
+- print the data of the passed index 
+- through the dict(array that checks through boolean), mark that v index(dict[v]) as true(1)
+- start a for loop where trav is initialized as passed index (G[v]), trav is NOT null, and increments via traverseing to next (trav = trav->next)
+- in the loop, check if the data of trav is FALSE(Unvisited) in the dict(dict[v] == 0)
+- IF not visited call dfs recursively, passing trav's data(next index) as your v, ELSE loop continues
+
 
 DFS Graphs
 Depth First Traversal
@@ -401,103 +410,22 @@ Depth First Traversal
 
 BFS Graph
 Breadth First Graph
-- starts with any nopde for trav, makes use of array to check if visited
-- visits all nodes adjacent to current node //recursive? NOT RECURSIVE
+Uses a queueing system to print out the numbers layer by layer
+ - Initialize first the queue and checker array, then enqueue the starting layer
+ - next we will be utilizing 2  NESTED  while loops, where 
+    1) While queue is not empty 
+        - assign your dequeued value into a variable i 
+        - print i, mark it visited, and initialize a single ptr trav for that i 
+    2) While trav is NOT NULL
+        - if the data of your trav is NOT visited, then enqueue it 
+        - traverse to the next node 
+Remember: 
+Queue is a sacrificial array, where rear + 2 == front is full and front == -1 is empty 
+In enqueuing, determine where itll be inserted first then put the value
+In dequeueing, get the value first then determine where next dequeue goes
 
 
 
 
 
 
-
-
-
-
-
-
-
-int child = size; 
-int parent = 0; 
-size++ 
-
-
-//insertion
-heap[child] = data;
-while(child >= 0){
-    parent = (child - 1)/2;
-    if(heap[child] > heap[parent]){
-        swap(&heap[child], &heap[parent]);
-    }
-    child = parent; 
-} 
-
-
-//deletion
-int returntop = heap[0];
-size--; 
-swap(&heap[0], &heap[size]); 
-
-for(int i = size/2 - 1;i >= 0;i--){
-    heapify(pq, i);
-}
-
-
-//swap
-int temp = *a;
-*b = *a; 
-*b = temp; 
-
-//heapify 
-int largest = i;
-int left = 2(i) + 1;
-int right = 2(i) + 2; 
-
-if(left < size && arr[left] > arr[largest]){
-    largest = left; 
-}
-
-if(right < size && arr[right] > arr[largest]){
-    largest = right;
-}
-
-if(largest != i){
-    swap(&arr[largest], &arr[i]);
-    heapify(pq, largest);
-}
-
-typedef struct node{
-    struct node * next; 
-    int data; 
-}node, *ptr; 
-
-typedef ptr Graph[MAX]; 
-
-
-void dfs(Graph G, int v, int * dict){
-    printf("%d" G[v]->data); 
-    dict[v] = VISITED; 
-
-    for(node * trav = G[v]; trav != NULL ;trav = trav->next){
-        if(trav->data == UNVISITED){
-            dfs(G, trav->data, dict);
-        }
-    }
-}
-
-
-void insert(Graph G, int v, int val){
-    node * newNode = (node*)calloc(1, sizeof(node)); 
-    newNode->data = val; 
-
-    if(G[v] == NULL){
-
-    }
-
-
-    ptr trav = G[v]; 
-    while(trav->next != NULL){
-        trav = trav->next; 
-    }
-
-    trav->next = newNode; 
-}
