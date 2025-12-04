@@ -1,11 +1,20 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+#define MAX 20
+
+
 typedef struct node{
     struct node * lc;
     struct node * rc;
     int data;
 }*BST, node; 
+
+
+typedef struct{
+    node * stack[MAX]; 
+    int top;   
+}Stack; 
 
 void insert(BST * tree, int val);
 void delete(BST * tree, int val);
@@ -16,11 +25,15 @@ int maxHeight(BST tree);
 int minHeight(BST tree); 
 int depth(BST tree, int target);
 
+void push(Stack * s, BST node); 
+BST pop(Stack * s); 
+void initStack(Stack * s);
+void iterativePreorder(BST tree);
+
 
 int main(){
     BST tree = NULL; 
-
-        insert(&tree, 3);
+    insert(&tree, 3);
     insert(&tree, 5);
     insert(&tree, 9);
     insert(&tree, 1);
@@ -34,6 +47,9 @@ int main(){
     inorder(tree);
     printf("\nPreorder: ");
     preorder(tree);
+    printf("\nIterative preorder: ");
+    iterativePreorder(tree);
+
     printf("\nPostorder: ");
     postorder(tree);
     printf("\n");
@@ -43,8 +59,36 @@ int main(){
     printf("The depth of node %d is %d", 9, depth(tree, 9));
     return 0;
 
+}
 
+void push(Stack * s, BST newNode){
+    s->stack[++s->top] = newNode; 
+}
+BST pop(Stack * s){
+    return s->stack[s->top--]; 
+}
 
+void initStack(Stack * s){
+    for(int i = 0; i < MAX; i++){
+        s->stack[i] = 0; 
+    }
+
+    s->top = -1; 
+}
+
+void iterativePreorder(BST tree){
+    Stack * s = malloc(sizeof(Stack));
+    initStack(s); 
+    push(s, tree); 
+    BST curr = NULL; 
+
+    while(s->top != -1){
+        curr = pop(s); 
+        if(curr->rc != NULL ) push(s, curr->rc); 
+        if(curr->lc != NULL) push(s, curr->lc); 
+
+        printf("%d ", curr->data); 
+    }
 }
 
 void insert(BST * tree, int val){
@@ -58,6 +102,8 @@ void insert(BST * tree, int val){
         (*trav)->data = val; 
     }
 }
+
+
 void delete(BST * tree, int val){
     BST * trav = tree; 
     while(*trav != NULL && (*trav)->data != val){
@@ -136,3 +182,5 @@ int depth(BST trav, int target){
     trav = trav->data > target ? trav->lc : trav->rc; 
     return depth(trav, target) + 1; 
 }
+
+

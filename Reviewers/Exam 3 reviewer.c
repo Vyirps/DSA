@@ -163,7 +163,26 @@ Basic Commands
     - call delete function with the parameters as address of trav's right child, and value of temp: delete(&(*trav)->rc, temp->data)
     //this last step starts a 1 step recursion to delete the node we copied from, which is either no child or 1 child 
 
+4. Order traversions(recursive)
+    Follows the same format where 
+    inorder(BST tree){
+        inorder(tree->lc); 
+        printf("%d ", tree->data);
+        inorder(tree->rc); 
+    }
+    //pre and post order follows the same syntax, but the order of the code lines depend on their order
 
+5. Iterative traversal(preorder)
+ - Uses a stack system the stores an array of nodes(addresses)
+    - Function is as follows:
+    - Initialize a pointered stack s, which will store all the numbers
+    - make sure to call initStack if u have, push the first node(tree) to the stack
+    - Iniialize a curr to traverse and push later on
+
+    - Initialize a while loop, where the condition is stack is NOT empty 
+    - When true, then pop you stack and assign its returned node to curr
+    - have two if conditions, checking if its respective child is not null, then push //make sure u start the if condition on right first
+    - loop ends will keep looping the while until stack is emmpty..
 
 Graphs 
 - a finite set of points connected, called vertices 
@@ -185,7 +204,7 @@ Different Types of graphs
 3.  Complete Graph
     - ever pair of node is joined by an edge (A to B,C : B to A,C : C to A,B)
     * to calculate for amount of edges in a complete graph, the formula is:
-        (n-1) * (n-2) where is n is the total amount of nodes
+        n(n-1)/2 where is n is the total amount of nodes
 
 4. Connected Graph 
     - If there exists a path for every arbitrary source or event
@@ -196,10 +215,10 @@ Arc (Tail-------->Head)
 - joins unordered pair of distinct nodes, pointing to another node
 
 Adjacency 
-- Node that is adjacent to each other 
-Example: T2 --------> T1
+- Node that is adjacent(beside) to each other 
+Example: T2 --------T1
     - T2 is ADJACENT to T1
-    - Head is ADJACENT to Tail
+    
 
 Path
 - Sequences of vertices
@@ -211,19 +230,20 @@ Example: A ---------> B ---------> C
 
 Simple path 
 - If all vertices are distinct
-//in a sense each node can only have one outgoing and receiving
-Example: A ----> B ----> C ----> D ----> A //this is valid, fulfills condition
+//in a sense each node only appears ONCE
+Example: A ----> B ----> C ----> D //this is valid, fulfills condition
          A ----> B ----> C ----> A ----> D //this is NOT valid, breaks condition
 
 Loops are defined through cycles, where:
 Simple Cycle 
-- Simple path that begins and ends at the same vertex (Example 1 of simple path)
+Example: A ----> B ----> C ----> D ----> A//this is valid, fulfills condition
+- SStarts and ends on the same loop
 
 Cyclic Graph 
-- Contains a cycle(loop)
+- Contains a cycle(loop) ANYWHERE in the graph 
 
 Acyclic Cycle
-- Contains NO cycle(no loop)
+- Contains NO cycle(no loop) //no  loop found in the graph
 
 Incident 
 - A node is incident to an arc IF n is one of the two nodes in an ordered pair
