@@ -45,10 +45,20 @@ void initBasket(Basket * s);
 
 int main(){
     Tree appleTree = NULL; 
-    Apple apple1 = {4, "RIPE"}; 
-    Apple apple2 = {5, "UNRIPE"}; 
-    growApple(&appleTree, apple1); 
-    growApple(&appleTree, apple2);
+    Apple appleArray[MAX] = {
+        {5, "RIPE"},
+        {3, "UNRIPE"},
+        {8, "RIPE"},
+        {2, "ROTTEN"},
+        {4, "RIPE"},
+        {7, "UNRIPE"},
+        {9, "RIPE"},
+        {1, "ROTTEN"},
+        {6, "RIPE"}
+    };
+    for(int i = 0; i < 9; i++){
+        growApple(&appleTree, appleArray[i]); 
+    }
     printf("Current tree\n");
     preorder(appleTree);
     Basket * basket ;
@@ -76,7 +86,7 @@ void growApple(Tree * appleTree, Apple newApple){
 }
 Basket * harvestApple(Tree * appleTree){
     Stack * s = malloc(sizeof(Stack)); 
-    Basket * basket = malloc(sizeof(Stack)); 
+    Basket * basket = malloc(sizeof(Basket)); 
     initStack(s);
     initBasket(basket); 
     
@@ -104,18 +114,19 @@ Basket * harvestApple(Tree * appleTree){
 
             Tree del = *curr; 
 
-            if((*curr)->left != NULL){
-                *curr  = del->left; 
+            if((*curr)->left == NULL){
+                *curr  = del->right; 
                 free(del); 
-            }else if((*curr)->right != NULL){
-                *curr = del->right;
+            }else if((*curr)->right == NULL){
+                *curr = del->left;
                 free(del);  
             }else{
                 Tree parent = del; 
                 Tree child = del->right;
                 while(child->left != NULL){
-                    child = child->left;
                     parent = child; 
+                    child = child->left;
+
                 }
                 
 

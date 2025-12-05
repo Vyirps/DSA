@@ -45,6 +45,7 @@ int main(){
 
     printf("Inorder: ");
     inorder(tree);
+    delete(&tree, 3);
     printf("\nPreorder: ");
     preorder(tree);
     printf("\nIterative preorder: ");
@@ -104,34 +105,35 @@ void insert(BST * tree, int val){
 }
 
 
-void delete(BST * tree, int val){
+void delete(BST * tree, int val ){
     BST * trav = tree; 
     while(*trav != NULL && (*trav)->data != val){
         trav = (*trav)->data > val ? &(*trav)->lc : &(*trav)->rc; 
     }
 
-    if((*trav)->data == val){
-        //4 outcomes
-        if((*trav)->lc == NULL && (*trav)->rc == NULL){
-            free(*trav); 
-            *trav = NULL;
-        }else if((*trav)->lc != NULL && (*trav)->rc == NULL){
-            BST temp = (*trav)->lc; 
-            free(*trav); 
-            *trav = temp; 
-        }else if((*trav)->lc == NULL && (*trav)->rc != NULL){
-            BST temp = (*trav)->rc; 
-            free(*trav); 
-            *trav = temp; 
+    if(*trav != NULL){
+
+        BST del = *trav;
+        if(del->lc == NULL){
+            *trav = del->rc; 
+            free(del); 
+        }else if(del->rc == NULL){
+            *trav = del->lc; 
+            free(del); 
         }else{
-            BST temp = (*trav)->rc;
-            while(temp->lc != NULL){
+
+            BST temp = del->rc;
+            if(temp->lc != NULL){
                 temp = temp->lc; 
             }
+
             (*trav)->data = temp->data; 
-            delete(&(*trav)->rc, temp->data); 
+            delete(&(*trav)->rc, temp->data);
         }
     }
+
+
+
 }
 void preorder(BST tree){
     if(tree != NULL){

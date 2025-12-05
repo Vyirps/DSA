@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/DSA/DSA/11 - BST",
-      "program": "c:/DSA/DSA/11 - BST/build/Debug/outDebug",
+      "cwd": "c:/DSA/DSA/Possible exam 3",
+      "program": "c:/DSA/DSA/Possible exam 3/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
