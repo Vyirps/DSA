@@ -267,7 +267,108 @@ delete(VHeap V, int target){
 }
 
 
-2 -> 3
+
+
+insert(){
+    bitmask = 1 << index; 
+    a &= bitmask; 
+}
+
+delete(){
+    bitmask = 1 << index; 
+    a &= (~bitmask); 
+}
+
+
+find(){
+    return ((a >> index ) & 1); 
+}
+
+
+
+Union(){
+    return A | B; 
+}
+
+
+intersect(){
+    return A & B; 
+}
+
+
+difference(){
+    return A & (~B);
+}
+
+
+
+
+
+int allocSpace(){
+    int index = V->avail; 
+    V->avail = V->secondHeap[index].next; 
+    return index; 
+}
+
+
+int deallocSpace(){
+    V->secondHeap[V->avail] = index; 
+    V->avail = index; 
+}
+
+
+void insert()
+    int key =  hash(elem); 
+    node * ptr = &V->heap[key]; 
+
+    while(1){
+        if(ptr->elem == elem) return; 
+        if(ptr->next == -1) break; 
+
+        ptr = &V->secondHeap[ptr->next]; 
+    }
+
+
+    if(V->Heap[key].elem == EMPTY){
+        V->Heap[key].elem = elem; 
+    }else{
+        int index = allocSpace; 
+        V->secondHeap[index].elem = elem; 
+        V->secondHeap[index].next = ptr->next; 
+        ptr->next = index; 
+    }
+
+
+
+
+void delete()
+    int key = hash(elem); 
+    node * prev = NULL; 
+    node * curr = &V->heap[key]; 
+    
+    
+    while(1){
+        if(ptr->elem == target) break; 
+        if(ptr->next == -1) break; 
+
+        ptr = &V->secondHeap[ptr->next]; 
+    }
+
+    if(ptr->elem != target) return; 
+
+    if(prev == NULL){
+        if(ptr->elem  == elem){
+            V->heap[key] = EMPTY; 
+        }else{
+            int index = curr->next; 
+            *curr = V->secondHeap[index]; 
+            deallocSpace(index); 
+        }
+    }else{
+        int index = prev->next; 
+        prev->next = curr->next; 
+        deallocSpace(index); 
+    }
 
 
 
