@@ -187,7 +187,7 @@ if(prev == -1){
     }
 
     Outcome 1(delete at first)
-}else{
+}else{9
     Outcome 3(Delete on secondary table);
 }
 
@@ -335,3 +335,6 @@ assign *trav (VALUE) to  temp
 
 
 */
+
+
+

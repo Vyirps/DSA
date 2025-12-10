@@ -165,6 +165,9 @@ void insertClosed(VHeap *VH, int elem) //elem
     }
 }
 
+
+
+
 void delete(VHeap * VH, int elem){ //elem
     int key = hash(elem); 
     Node * curr = &VH->H[key], * prev = NULL; 
@@ -197,5 +200,75 @@ void delete(VHeap * VH, int elem){ //elem
         deallocSpace(index); 
     }
 }
+
+
+
+
+
+int allocSpace(VHeap V){
+    int index = V->avail;
+    V->avail = V->Heap[index].next;
+    return index; 
+}
+
+
+void deallocSpace(VHeap V, int index){
+    V->heap[index].next = V->avail; 
+    V->avail = index; 
+}
+
+
+insertDict(VHeap V, int newElem); 
+int key = hash(newElem); 
+node * ptr = &D->elem[key]; 
+
+
+while(1){
+    if(ptr->data == index) return; //already exist
+    if(ptr->next == -1) break; //found last
+    ptr  = &V->secondHeap[ptr->next];
+}
+
+if(V->heap == EMPTY){
+    V->heap[key].data = newElem; 
+}else{
+    int newNode = allocSpace(V);
+    V->heap[index].data = newElem;
+    V->heap[index].elem = ptr->link; 
+    ptr->link = newNode; 
+
+}
+
+delete(VHeap V, int target){
+    int key = hash(target); 
+    node * curr = &V->heap[key]; 
+    node * prev = NULL; 
+
+    while(curr->next != -1){
+        if(curr->elem == target) break; 
+        prev = curr; 
+        curr = &V->secondHeap[curr->next]; 
+    }
+    if(curr->elem != target) return; 
+
+    if(prev == NULL){
+        if(curr->next == -1){
+            curr->elem = EMPTY; 
+        }else{
+            int index  = curr->next; 
+            *curr = V->secondHeap[curr->next];
+            deallocSpace(index); 
+        }
+    }else{
+        int index = prev->next; 
+        prev->next = curr->next;
+        deallocSpace(index);  
+    }
+}
+
+
+2 -> 3
+
+
 
 
