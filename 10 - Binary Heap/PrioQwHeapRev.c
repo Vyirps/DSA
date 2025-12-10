@@ -143,17 +143,8 @@ void insertProcess(PriorityQueue *pq, Process newProcess){
     pq->heap[pq->size] = newProcess; 
     pq->size += 1; 
 
-    int child = pq->size-1;
-    int parent; 
-    while(child >= 0){
-        parent = (child -1)/2;
-        if(pq->heap[child].priority > pq->heap[parent].priority){
-            swap(&pq->heap[child], &pq->heap[parent]); 
-        }else{
-            break;
-        }
-        
-        child = parent; 
+    for(int i = pq->size/2 -1; i >= 0; i--){
+        heapifyDown(pq, i); 
     }
     
     printf("-> ENQUEUED: Process ID %d (Priority: %d)\n", newProcess.pid, newProcess.priority);
