@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 
 #define MAX 10
 
@@ -21,69 +22,55 @@ void display(Stack * s);
 int main(){
     Stack * s = initialize();
     push(s, 1);
-    printf("\n%d data\n", s->items[0]);
+    printf("\n%d data\n", s->items[s->top]);
     push(s, 2);
-        printf("\n%d data\n", s->items[1]);
+        printf("\n%d data\n", s->items[s->top]);
     push(s, 3);
 
     push(s, 4);
     display(s);
-    int num = pop(s);
-    num = pop(s);
+    printf("Popped num %d", pop(s)); 
+
     display(s);
 }
 
 Stack * initialize(){
     Stack * s = (Stack*)malloc(sizeof(Stack)); 
-    s->top = -1; 
+    s->top = MAX; 
     return s;
 }
 
 
 bool isFull(Stack * s){
-    return s->top == MAX - 1;
+    return s->top == -1;
 }
 
 
 
 bool isEmpty(Stack * s){
-    return s->top == -1;
+    return s->top == MAX;
 }
 
 
 void push(Stack * s, int value){
-        if(!isFull(s)){
-            s->top++;
-            s->items[s->top] =  value;
-        }
+        if(isFull(s)) return; 
+        s->items[--s->top] = value;
     }
 
 
 
 int pop(Stack * s){
-    if(!isEmpty(s)){
-        int num = s->items[s->top];
-        s->top--;
-        return num;
-    }else{
-        printf("\nCurrent Stack is empty\n");
-    }
-
-
+    return (!isEmpty(s)) ? s->items[s->top++] : -1;
 }
 int peek(Stack * s){
-    if(!isEmpty(s)){
-        return s->items[s->top];
-    }else{
-        return -1;
-    }
 
+    return (!isEmpty(s)) ? s->items[s->top] : -1; 
 
 }
 void display(Stack * s){
     if(!isEmpty(s)){
         printf("\nStack\n");
-        for(int i = 0;i <= s->top ;i++){
+        for(int i = MAX -1 ;i >= s->top ;i--){
             printf("Index %d: %d\n",i,  s->items[i]);
         }
     }else{
