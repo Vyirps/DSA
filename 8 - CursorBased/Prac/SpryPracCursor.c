@@ -3,41 +3,8 @@
 #include <stdbool.h>
 #define MAX 4
 
-/*
-practice steps
-1. initialize with avail as 0, L as -1 and Heap where iterate through it and set to the next until last, where u set it to -1
-2. functions are insertFirst/Last(*L, *V, elem) ,allocSpace(*V), deallocSpace(*V, index), delete(*L, *V, elem), display(*V)
-3. insertion two types
-3.1 insert first
-- check first if avail -1 for availability
-- call allocspace, create node
-- insert data at returned allocspace index, set next to head, set head to node(like LL insert first)
-
-3.2 insert last
--check first if avail -1 for availability
--call allocspace, create node
--set data, set next to -1(signify its last)
--traversion from head, until -1 (trav = &V->H[*trav].next)
-- set *trav to allocspace index (to connect)
 
 
-4. alloc space
-- create index and set it to temp , update avail to the next of temp, return temp
-
-5. dealloc space
-- set next of passed index as avail then set index as the new avail
-
-6. deletion
-- initialize *trav and temp, traverse as long as *trav is not -1 and next of trav does not match elem
-- if found, set *trav as temp for index to "delete", reroute *trav to point to next of node to "delete" 
-(*trav = V->H[*trav].next) then call dealloc space for "deletion"
-
-7. display
-- initialize a trav to traverse and print until -1
-
-
-
-*/
 typedef struct{
     int elem;
     int next;
