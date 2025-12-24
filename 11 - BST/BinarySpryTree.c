@@ -16,19 +16,33 @@ typedef struct{
     int top;   
 }Stack; 
 
+typedef struct{
+    int front; 
+    int rear; 
+    node * qArr[MAX + 1];
+}Queue; 
+
 void insert(BST * tree, int val);
 void delete(BST * tree, int val);
 void preorder(BST tree);
 void postorder(BST tree);
 void inorder(BST tree);
-int maxHeight(BST tree); 
-int minHeight(BST tree); 
-int depth(BST tree, int target);
+void dfs(BST tree); //recursive
 
+void bfs(BST tree); //Queue system
+void initQueue(Queue * q); 
+void enqueue(Queue * q, BST tree);
+BST dequeue(Queue * q);  
+
+void iterativePreorder(BST tree);
 void push(Stack * s, BST node); 
 BST pop(Stack * s); 
 void initStack(Stack * s);
-void iterativePreorder(BST tree);
+
+//for fun
+int maxHeight(BST tree); 
+int minHeight(BST tree); 
+int depth(BST tree, int target);
 
 
 int main(){
@@ -46,6 +60,7 @@ int main(){
     printf("Inorder: ");
     inorder(tree);
     delete(&tree, 3);
+    printf("\ndeleting 3..\n");
     printf("\nPreorder: ");
     preorder(tree);
     printf("\nIterative preorder: ");
@@ -55,6 +70,16 @@ int main(){
     postorder(tree);
     printf("\n");
 
+    printf("DFS: ");
+    dfs(tree); 
+   printf("\n");
+
+   printf("BFS: ");
+    bfs(tree);
+   printf("\n");
+
+
+
     printf("The maximum height is %d\n", maxHeight(tree));
     printf("The minimum height is %d\n", minHeight(tree));
     printf("The depth of node %d is %d", 9, depth(tree, 9));
@@ -62,35 +87,6 @@ int main(){
 
 }
 
-void push(Stack * s, BST newNode){
-    s->stack[++s->top] = newNode; 
-}
-BST pop(Stack * s){
-    return s->stack[s->top--]; 
-}
-
-void initStack(Stack * s){
-    for(int i = 0; i < MAX; i++){
-        s->stack[i] = 0; 
-    }
-
-    s->top = -1; 
-}
-
-void iterativePreorder(BST tree){
-    Stack * s = malloc(sizeof(Stack));
-    initStack(s); 
-    push(s, tree); 
-    BST curr = NULL; 
-
-    while(s->top != -1){
-        curr = pop(s); 
-        if(curr->rc != NULL ) push(s, curr->rc); 
-        if(curr->lc != NULL) push(s, curr->lc); 
-
-        printf("%d ", curr->data); 
-    }
-}
 
 void insert(BST * tree, int val){
     BST * trav = tree; 
@@ -157,6 +153,97 @@ void inorder(BST tree){
         inorder(tree->rc);
     }
 }
+
+void dfs(BST tree){
+    if(tree != NULL){
+        printf("%d ", tree->data); 
+        preorder(tree->lc); 
+        preorder(tree->rc); 
+    }
+}
+
+void bfs(BST tree){
+    if(tree == NULL) return; 
+
+    Queue q; 
+    initQueue(&q); 
+    enqueue(&q, tree);
+    while (q.front != -1){
+        
+        BST curr = dequeue(&q);
+        printf("%d ", curr->data); 
+
+        if(curr->lc != NULL) enqueue(&q, curr->lc); 
+        if(curr->rc != NULL) enqueue(&q, curr->rc);
+    }
+    
+}
+void initQueue(Queue * q){
+    q->front = -1; 
+    q->rear = 0;
+} 
+void enqueue(Queue * q, BST val){
+    if(q->rear + 2 == q->front){
+        return; 
+    }
+
+    if(q->front == -1){
+        q->front = 0;
+    }else{
+        q->rear = (q->rear + 1) % MAX; 
+    }
+
+    q->qArr[q->rear] = val; 
+}
+BST dequeue(Queue * q){
+    if(q->front == -1){
+        return NULL; 
+    }
+
+    BST val = q->qArr[q->front];
+    if(q->front == q->rear){
+        initQueue(q);
+    }else{
+        q->front = (q->front + 1) % MAX; 
+    }
+
+    return val; 
+}
+
+
+
+
+void push(Stack * s, BST newNode){
+    s->stack[++s->top] = newNode; 
+}
+BST pop(Stack * s){
+    return s->stack[s->top--]; 
+}
+
+void initStack(Stack * s){
+    for(int i = 0; i < MAX; i++){
+        s->stack[i] = 0; 
+    }
+
+    s->top = -1; 
+}
+
+void iterativePreorder(BST tree){
+    Stack * s = malloc(sizeof(Stack));
+    initStack(s); 
+    push(s, tree); 
+    BST curr = NULL; 
+
+    while(s->top != -1){
+        curr = pop(s); 
+        if(curr->rc != NULL ) push(s, curr->rc); 
+        if(curr->lc != NULL) push(s, curr->lc); 
+
+        printf("%d ", curr->data); 
+    }
+}
+
+
 
 
 int maxHeight(BST tree){
