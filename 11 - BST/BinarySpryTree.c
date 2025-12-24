@@ -79,6 +79,7 @@ int main(){
    printf("\n");
 
 
+    printf("\n\n");
 
     printf("The maximum height is %d\n", maxHeight(tree));
     printf("The minimum height is %d\n", minHeight(tree));
