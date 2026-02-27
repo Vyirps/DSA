@@ -66,11 +66,7 @@ bool isEmpty(Queue * Q){
 
 void enqueue(Queue * Q, int value){
     if(!isFull(Q)){
-        if(!isEmpty(Q)){
             Q->rear = (Q->rear + 1) % MAX;
-        }else{
-            Q->rear = (Q->rear + 1) % MAX; 
-        }
             Q->list.items[Q->rear] = value;
     }else{
         printf("cant queue its full\n");
